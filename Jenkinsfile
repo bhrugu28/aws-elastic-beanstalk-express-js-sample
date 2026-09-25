@@ -13,7 +13,7 @@ pipeline {
     }
 
     environment {
-        IMAGE_REPO = 'YOUR_DOCKERHUB_USERNAME/isec6000-assessment2'
+        IMAGE_REPO = 'bhrugusharma/isec6000-assessment2'
     }
 
     stages {
@@ -67,18 +67,14 @@ pipeline {
                       --mount "type=bind,source=$WORKSPACE,target=/app" \
                       --workdir /app \
                       --env npm_config_cache=/tmp/npm-cache \
-                      node:16-bullseye-slim sh -s <<'AUDIT_SCRIPT'
-                    set -u
-                    mkdir -p reports
+                      node:16-bullseye-slim \
+                    sh -c 'set -u
+                        mkdir -p reports
+                        audit_status=0
+                        npm audit --audit-level=high --json > reports/npm-audit.json || audit_status=$?
+                        tail -n 16 reports/npm-audit.json
+                        exit "$audit_status"'
 
-                    status=0
-                    npm audit --audit-level=high --json \
-                      > reports/npm-audit.json || status=$?
-
-                    node -e 'const a = require("./reports/npm-audit.json"); if (!a.metadata || !a.metadata.vulnerabilities) process.exit(2); console.log("Vulnerabilities:", JSON.stringify(a.metadata.vulnerabilities))'
-
-                    exit "$status"
-                    AUDIT_SCRIPT
                 '''
             }
         }
