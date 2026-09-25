@@ -1,4 +1,4 @@
-FROM node:24-bookworm-slim
+FROM node:16-bullseye-slim
 
 ENV NODE_ENV=production \
     PORT=8080

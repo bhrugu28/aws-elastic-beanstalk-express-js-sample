@@ -93,7 +93,7 @@ pipeline {
             steps {
                 withCredentials([usernamePassword(
                     credentialsId: 'dockerhub-assessment2',
-                    usernameVariable: 'DOCKERHUB_USER',
+                    usernameVariable: 'bhrugu28',
                     passwordVariable: 'DOCKERHUB_TOKEN'
                 )]) {
                     sh '''
