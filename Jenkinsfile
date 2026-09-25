@@ -89,7 +89,7 @@ pipeline {
             steps {
                 withCredentials([usernamePassword(
                     credentialsId: 'dockerhub-assessment2',
-                    usernameVariable: 'bhrugu28',
+                    usernameVariable: 'DOCKERHUB_USER',
                     passwordVariable: 'DOCKERHUB_TOKEN'
                 )]) {
                     sh '''
@@ -114,7 +114,6 @@ pipeline {
 
     post {
         always {
-            junit allowEmptyResults: true, testResults: 'reports/junit.xml'
             archiveArtifacts(
                 artifacts: 'reports/*',
                 allowEmptyArchive: true

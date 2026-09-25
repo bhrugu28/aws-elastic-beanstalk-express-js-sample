@@ -1,7 +1,8 @@
 const assert = require('node:assert/strict');
 const { parsePort } = require('../config');
+const { it } = require('node:test');
 
-describe('Port configuration', () => {
+
   it('defaults to port 8080', () => {
     assert.equal(parsePort(undefined), 8080);
   });
@@ -20,4 +21,3 @@ describe('Port configuration', () => {
       assert.throws(() => parsePort(value), /PORT must be/);
     }
   });
-});

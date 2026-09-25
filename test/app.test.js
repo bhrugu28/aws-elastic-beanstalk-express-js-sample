@@ -1,8 +1,9 @@
 const assert = require('node:assert/strict');
 const request = require('supertest');
 const app = require('../app');
+const { it } = require('node:test');
 
-describe('Application HTTP endpoints', () => {
+
   it('returns the original greeting', async () => {
     await request(app)
       .get('/')
@@ -28,4 +29,3 @@ describe('Application HTTP endpoints', () => {
 
     assert.equal(response.headers['x-powered-by'], undefined);
   });
-});
